@@ -1,7 +1,107 @@
-$background-color: #4e4e4e;
-$font-color: #dfdfdf;
-
 body {
-  background-color: $background-color;
-  color: $font-color;
+  background-color: black;
+  color: yellow;
+  font-family: cursive;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+}
+
+.board{
+  height: 600px;
+  width: 600px;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+div {
+  display: inline-block;
+  float: left;
+}
+
+.r1c1 {
+  background-color: green;
+  height:32%;
+  width:32%;
+  display: inline-block;
+  border-right: 3px solid white;
+  border-bottom: 3px solid white;
+}
+
+.r1c2 {;
+  background-color: green;
+  height:32%;
+  width:32%;
+  display: inline-block;
+  border-left: 3px solid white;
+  border-right: 3px solid white;
+  border-bottom: 3px solid white;
+}
+
+.r1c3 {;
+  background-color: green;
+  height:32%;
+  width:32%;
+  display: inline-block;
+  border-left: 3px solid white;
+  border-bottom: 3px solid white;
+}
+
+.r2c1 {;
+  background-color: blue;
+  height:32%;
+  width:32%;
+  display: inline-block;
+  border-right: 3px solid white;
+  border-bottom: 3px solid white;
+  border-top: 3px solid white;
+}
+
+.r2c2 {;
+  background-color: blue;
+  height:32%;
+  width:32%;
+  display: inline-block;
+  border: 3px solid white;
+
+}
+
+.r2c3{
+  background-color: blue;
+  height:32%;
+  width:32%;
+  display: inline-block;
+  border-left: 3px solid white;
+  border-bottom: 3px solid white;
+  border-top: 3px solid white;
+}
+
+.r3c1 {
+  background-color: red;
+  height:32%;
+  width:32%;
+  display: inline-block;
+  border-right: 3px solid white;
+  border-top: 3px solid white;
+}
+
+.r3c2 {
+  background-color: red;
+  height:32%;
+  width:32%;
+  display: inline-block;
+  border-left: 3px solid white;
+  border-right: 3px solid white;
+  border-top: 3px solid white;
+}
+
+.r3c3 {
+  background-color: red;
+  height:32%;
+  width:32%;
+  display: inline-block;
+  border-left: 3px solid white;
+  border-top: 3px solid white;
 }
