@@ -44,3 +44,9 @@ Developers should run these often!
 
 Source code distributed under the MIT license. Text and other assets copyright
 General Assembly, Inc., all rights reserved.
+
+A <role> when < condition>, an < action> , which will <effect>
+- When  User enters their name for either player one or player two on the side block and press the submit button, his/her name will automatically display in the player block underneath the game.
+- When both player enters their name, the player 2 bottom block  will fade. 
+- User (player 1) clicks on one of the square Tic Tac Toe block, which will cause ether an X
+ to appear on the Tic Tac Toe block  and then the player 1 block will fade a little bit and player 2 block will reappear.
