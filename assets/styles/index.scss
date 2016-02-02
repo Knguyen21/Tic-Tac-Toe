@@ -10,98 +10,115 @@ h1 {
 }
 
 .board{
-  height: 600px;
-  width: 600px;
-  margin-left: 25%;
-  margin-right: 25%;
+  height: 400px;
+  width: 400px;
+  margin: auto;
 }
 
-div {
-  display: inline-block;
-  float: left;
+
+div div:hover {
+	background-color: rgba(23,156,33,0.5);
+}
+
+#reset {
+  margin-left: 500px;
+  margin-right: 500px;
+  border: 3px solid blue;
+  text-align: center;
+  background-color: red;
 }
 
 .r1c1 {
-  background-color: green;
+  // background-color: green;
   height:32%;
   width:32%;
   display: inline-block;
   border-right: 3px solid white;
   border-bottom: 3px solid white;
+  float: left;
 }
 
+
 .r1c2 {;
-  background-color: green;
+  // background-color: green;
   height:32%;
   width:32%;
   display: inline-block;
   border-left: 3px solid white;
   border-right: 3px solid white;
   border-bottom: 3px solid white;
+  float: left;
 }
 
 .r1c3 {;
-  background-color: green;
+  // background-color: green;
   height:32%;
   width:32%;
   display: inline-block;
   border-left: 3px solid white;
   border-bottom: 3px solid white;
+  float: left;
+
 }
 
 .r2c1 {;
-  background-color: blue;
+  // background-color: blue;
   height:32%;
   width:32%;
   display: inline-block;
   border-right: 3px solid white;
   border-bottom: 3px solid white;
   border-top: 3px solid white;
+  float: left;
 }
 
 .r2c2 {;
-  background-color: blue;
+  // background-color: blue;
   height:32%;
   width:32%;
   display: inline-block;
   border: 3px solid white;
-
+  float: left;
 }
 
 .r2c3{
-  background-color: blue;
+  // background-color: blue;
   height:32%;
   width:32%;
   display: inline-block;
   border-left: 3px solid white;
   border-bottom: 3px solid white;
   border-top: 3px solid white;
+  float: left;
 }
 
 .r3c1 {
-  background-color: red;
+  // background-color: red;
   height:32%;
   width:32%;
   display: inline-block;
   border-right: 3px solid white;
   border-top: 3px solid white;
+  float: left;
 }
 
 .r3c2 {
-  background-color: red;
+  // background-color: red;
   height:32%;
   width:32%;
   display: inline-block;
   border-left: 3px solid white;
   border-right: 3px solid white;
   border-top: 3px solid white;
+  float: left;
 }
 
 .r3c3 {
-  background-color: red;
+  // background-color: red;
   height:32%;
   width:32%;
   display: inline-block;
   border-left: 3px solid white;
   border-top: 3px solid white;
+  float: left;
 }
