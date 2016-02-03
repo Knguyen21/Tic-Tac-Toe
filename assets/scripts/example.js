@@ -2,15 +2,28 @@
 
 let players = ['X', 'O'];
 let count = 0;
-let gameboard =['', '', '', '', '', '', '', ''];
+let gameboard =['', '', '', '', '', '', '', '', ''];
+let playerScore = [0,0];
+let tieScore = 0;
+
 
 
 const reset = function(){
   count = 0;
-  gameboard =['', '', '', '', '', '', '', ''];
+  gameboard =['', '', '', '', '', '', '', '', ''];
   $('.board').children().html("");
 
 };
+
+const tie = function(){
+  if(count === 9){
+    tieScore += 1;
+    $('#tie').html(tieScore);
+    alert("tie");
+    reset();
+  }
+};
+
 
 
 const getWinner = function(player, value){
@@ -24,6 +37,13 @@ const getWinner = function(player, value){
     ((gameboard[2] === value) && (gameboard[4] === value) &&(gameboard[6] === value)) )
   {
       alert("winner is " + players[player]);
+      playerScore[player] += 1;
+      if(value ==='x'){
+        $('#x').html(playerScore[player]);
+      }
+      else if(value ==='o'){
+        $('#o').html(playerScore[player]);
+      }
       reset();
   }
 };
@@ -37,20 +57,24 @@ $(document).ready(function() {
           $(this).html(players[0]);
           count +=1;
           gameboard[event.target.id] ='x';
-          alert(event.target.id);
-          alert(gameboard);
+          // alert(event.target.id);
+          console.log(gameboard);
           getWinner(0, 'x');
+          tie();
+
         }
         else {
           $(this).html(players[1]);
           count +=1;
           gameboard[event.target.id] ='o';
-          alert(event.target.id);
-          alert(gameboard);
+          // alert(event.target.id);
+          console.log(gameboard);
           getWinner(1, 'o');
+          tie();
         }
       }
     });
+
 
     $('#reset').click(function() {
       reset();
