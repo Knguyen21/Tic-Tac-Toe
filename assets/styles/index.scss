@@ -9,6 +9,17 @@ h1 {
   text-align: center;
 }
 
+#announcement {
+  border: 3px solid white;
+  border-radius: 20%;
+  height: 30px;
+  margin-left: 400px;
+  margin-right: 400px;
+  text-align: center;
+  background-color: green;
+  font-size: 20px;
+}
+
 .board{
   height: 400px;
   width: 400px;
@@ -26,6 +37,7 @@ div div:hover {
   border: 3px solid blue;
   text-align: center;
   background-color: red;
+  border-radius: 30%;
 }
 
 .r1c1 {
@@ -121,4 +133,17 @@ div div:hover {
   border-left: 3px solid white;
   border-top: 3px solid white;
   float: left;
+}
+img {
+  height: 100%;
+  width: 100%;
+}
+#winner {
+   width: 150px;
+   height: 150px;
+   margin-left: 500px;
+   margin-right:500px;
+  text-align: center;
+  font-size: 20px;
+
 }
