@@ -16,9 +16,7 @@ const reset = function(){
   gameboard =['', '', '', '', '', '', '', '', ''];
   $('#winner').hide();
   $('.board').children().html("");
-  // $('.board').show();
   $('#announcement').html("Player 1: Apple turn!").show();
-
 };
 
 const tie = function(){
@@ -29,11 +27,8 @@ const tie = function(){
     $('#tie').html(tieScore);
     $('#announcement').hide();
     game.over =true;
-
   }
 };
-
-
 
 const getWinner = function(player, value, game){
   if(((gameboard[0] === value) && (gameboard[1] === value) &&(gameboard[2] === value)) ||
@@ -45,27 +40,23 @@ const getWinner = function(player, value, game){
     ((gameboard[0] === value) && (gameboard[4] === value) &&(gameboard[8] === value)) ||
     ((gameboard[2] === value) && (gameboard[4] === value) &&(gameboard[6] === value)) )
   {
-      // $('.board').hide();
-      $('#announcement').hide();
-      $('#winner').html("winner is " + players[player]).show();
-
-      playerScore[player] += 1;
-      if(value ==='x'){
-        $('#x').html(playerScore[player]);
-        game.over = true;
-      }
-      else if(value ==='o'){
-        $('#o').html(playerScore[player]);
-        game.over = true;
-      }
+    $('#announcement').hide();
+    $('#winner').html("winner is " + players[player]).show();
+    game.over = true;
     count = 0;
+    playerScore[player] += 1;
+    if(value ==='x'){
+      $('#x').html(playerScore[player]);
+    }
+    else if(value ==='o'){
+      $('#o').html(playerScore[player]);
+    }
   }
 };
 
 
 $(document).ready(function() {
   $('#winner').hide();
-
   $('.board').children().click(function() {
     if(game.over === false) {
       if($(this).html() === '') {
@@ -93,8 +84,6 @@ $(document).ready(function() {
       }
     }
   });
-
-
 
     $('#reset').click(function() {
       reset();
