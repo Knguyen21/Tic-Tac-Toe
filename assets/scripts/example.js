@@ -76,7 +76,34 @@ let createGame = function() {
   });
 };
 
+let getUserGames = function(){ /// put index and player
+  $.ajax({
+    url: myApp.baseURL + '/games',
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + myApp.user.token,
+    },
+    data: {}
+  })
+  .done(function(data){
+    myApp.game = data.game;
+    console.log(data);
+  })
+  .fail(function(jqxhr) {
+    console.error(jqxhr);
+  });
+};
+
+
+let hide = function(){
+  $('.board').hide();
+  $('#reset').hide();
+  $('#announcement').hide();
+  $('table').hide();
+};
 $(document).ready(function() {
+  hide();
+
   $('#sign-up').on('submit', function(e) {
     e.preventDefault();
     var formData = new FormData(e.target);
@@ -110,8 +137,14 @@ $(document).ready(function() {
       myApp.user = data.user;
       console.log(data);
       createGame();
+      getUserGames();
+      $('.board').show();
+      $('#reset').show();
+      $('#announcement').show();
+      $('table').show();
     }).fail(function(jqxhr) {
       console.error(jqxhr);
+
     });
   });
 
@@ -130,6 +163,7 @@ $(document).ready(function() {
       data: formData,
     }).done(function(data) {
       console.log(data);
+      hide();
     }).fail(function(jqxhr) {
       console.error(jqxhr);
     });
@@ -179,28 +213,9 @@ $(document).ready(function() {
     });
   };
 
-  let getUserGames = function(){ /// put index and player
-    $.ajax({
-      url: myApp.baseURL + '/games',
-      method: 'GET',
-      headers: {
-        Authorization: 'Token token=' + myApp.user.token,
-      },
-      data: {}
-    })
-    .done(function(data){
-      myApp.game = data.game;
-      console.log(data);
-    })
-    .fail(function(jqxhr) {
-      console.error(jqxhr);
-    });
-  };
 
 
- $('.history').click(function(){
-   getUserGames();
- });
+
 
 
 
@@ -217,7 +232,7 @@ let updateGame = function(player, index){ /// put index and player
           "index": index,
           "value": player,
         },
-      //"over": false
+      "over": false
       }
     }
   })

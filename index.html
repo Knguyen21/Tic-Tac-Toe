@@ -1,10 +1,56 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <title>Tic Tac Toe</title>
+      <title>90's Tic Tac Toe Game</title>
     </head>
     <body>
-      <h1>Tic Tac Toe</h1>
+      <h1>90's Tic Tac Toe Game</h1>
+      <body>
+      <form id="sign-up">
+        <label>E-mail
+          <input type="text" name="credentials[email]" value="abc@me.com">
+        </label>
+        <label>Password
+          <input type="text" name="credentials[password]" value="">
+        </label>
+        <input type="submit" name="submit" value="Sign Up">
+      </form>
+      <br>
+
+      <form id="sign-in">
+        <label>E-mail
+          <input type="text" name="credentials[email]" value="abc@me.com">
+        </label>
+        <label>Password
+          <input type="text" name="credentials[password]" value="">
+        </label>
+        <input type="submit" name="submit" value="Sign In">
+      </form>
+      <br>
+
+      <form id="sign-out">
+        <label>E-mail
+          <input type="text" name="credentials[email]" value="abc@me.com">
+        </label>
+        <label>Password
+          <input type="text" name="credentials[password]" value="">
+        </label>
+        <input type="submit" name="submit" value="Sign Out">
+      </form>
+      <br>
+
+      <form id="change-password">
+        <label>Old Password
+          <input type="text" name="passwords[old]" value="">
+        </label>
+        <label>New Password
+          <input type="text" name="passwords[new]" value="">
+        </label>
+        <input type="submit" name="submit" value="change password">
+      </form>
+      <br>
+      <br>
+      <div class="history"> Your History</div>
       <div id="winner"></div>
       <div id="announcement">Player 1: Apple turn!</div>
       <table border="1px">
