@@ -88,8 +88,8 @@ $(document).ready(function() {
       processData: false,
       data: formData,
     }).done(function(data) {
+      myApp.user = data.user;
       console.log(data);
-      createGame();
     }).fail(function(jqxhr) {
       console.error(jqxhr);
     });
@@ -159,6 +159,49 @@ $(document).ready(function() {
       console.error(jqxhr);
     });
   });
+  let showGame = function(){ /// put index and player
+    $.ajax({
+      url: myApp.baseURL + '/games/' + myApp.game.id,
+      method: 'GET',
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      data: {}
+    })
+    .done(function(data){
+      myApp.game = data.game;
+      console.log(data);
+      console.log("showgame");
+      console.log(myApp.game);
+    })
+    .fail(function(jqxhr) {
+      console.error(jqxhr);
+    });
+  };
+
+  let getUserGames = function(){ /// put index and player
+    $.ajax({
+      url: myApp.baseURL + '/games',
+      method: 'GET',
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      data: {}
+    })
+    .done(function(data){
+      myApp.game = data.game;
+      console.log(data);
+    })
+    .fail(function(jqxhr) {
+      console.error(jqxhr);
+    });
+  };
+
+
+ $('.history').click(function(){
+   getUserGames();
+ });
+
 
 
 let updateGame = function(player, index){ /// put index and player
@@ -181,11 +224,15 @@ let updateGame = function(player, index){ /// put index and player
   .done(function(data){
     myApp.game = data.game;
     console.log(data);
+    showGame();
   })
   .fail(function(jqxhr) {
     console.error(jqxhr);
   });
 };
+
+
+
   $('#winner').hide();
   $('.board').children().click(function() {
     if(game.over === false) {
