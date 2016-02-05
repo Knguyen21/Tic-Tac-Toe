@@ -21,6 +21,8 @@ const reset = function(){
   $('#winner').hide();
   $('.board').children().html("");
   $('#announcement').html("Player 1: Apple turn!").show();
+  createGame();
+  getUserGames();
 };
 
 const tie = function(){
@@ -30,6 +32,7 @@ const tie = function(){
     $('#winner').html('Oh No! A Tie!' + players[2]).show();
     $('#tie').html(tieScore);
     $('#announcement').hide();
+    getUserGames();
     game.over =true;
   }
 };
@@ -55,6 +58,7 @@ const getWinner = function(player, value, game){
     else if(value ==='o'){
       $('#o').html(playerScore[player]);
     }
+    getUserGames();
   }
 };
 
@@ -68,7 +72,10 @@ let getUserGames = function(){ /// put index and player
     data: {}
   })
   .done(function(data){
-    console.log(data);
+    // myApp.game = data.game;
+    console.log(data.games.length);
+    debugger;
+    $('#gameCounter').html(data.games.length);
   })
   .fail(function(jqxhr) {
     console.error(jqxhr);
@@ -101,6 +108,7 @@ let hide = function(){
   $('#reset').hide();
   $('#announcement').hide();
   $('table').hide();
+  $('#gameHistory').hide();
 };
 $(document).ready(function() {
   hide();
@@ -142,6 +150,7 @@ $(document).ready(function() {
       $('#reset').show();
       $('#announcement').show();
       $('table').show();
+      $('#gameHistory').show();
     }).fail(function(jqxhr) {
       console.error(jqxhr);
     });
@@ -226,12 +235,13 @@ let updateGame = function(player, index){ /// put index and player
           "index": index,
           "value": player,
         },
-      "over": false
+      // "over": true
       }
     }
   })
   .done(function(data){
     myApp.game = data.game;
+    getUserGames();
     console.log(data);
     showGame();
   })
@@ -239,7 +249,7 @@ let updateGame = function(player, index){ /// put index and player
     console.error(jqxhr);
   });
 };
-
+let playGame = function(){
   $('#winner').hide();
   $('.board').children().click(function() {
     if(game.over === false) {
@@ -254,7 +264,6 @@ let updateGame = function(player, index){ /// put index and player
           getWinner(0, 'x', game);
           count +=1;
           tie();
-
         }
         else {
           $(this).html(players[1]);
@@ -270,6 +279,10 @@ let updateGame = function(player, index){ /// put index and player
       }
     }
   });
+};
+
+
+playGame();
 
     $('#reset').click(function() {
       reset();
