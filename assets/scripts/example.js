@@ -4,15 +4,22 @@ const myApp = {
 };
 
 
-let players = ['<img src="http://icons.iconarchive.com/icons/bingxueling/fruit-vegetables/128/apple-red-icon.png"/>', '<img src="http://pngimg.com/upload/orange_PNG766.png">', '<img src= "http://www.altitudementalhealth.com/wp-content/uploads/2014/01/Apple-and-Orange-tied-together-7509690-300x200.jpg"/>'];
+let players = ['<img src= "http://www.altitudementalhealth.com/wp-content/uploads/2014/01/Apple-and-Orange-tied-together-7509690-300x200.jpg"/>',
+'<img src="http://icons.iconarchive.com/icons/bingxueling/fruit-vegetables/128/apple-red-icon.png"/>',
+'<img src="http://pngimg.com/upload/orange_PNG766.png">'];
 let count = 0;
 let gameboard =['', '', '', '', '', '', '', '', ''];
-let playerScore = [0,0];
-let tieScore = 0;
-
+let playerScore = [0, 0, 0];  //tie, player 1('x'): apple, player 2('o'): orrange
+let announcer = ["Oh no! It's a tie!", "Winner is  "]; // will display with an image of the tie staus or winner
+// underneath the statement.
 let game = {
   over: false,
 };
+
+let winOrTie = function(announcer, index, player) {
+  $(announcement)
+
+}
 
 
 const reset = function(){
