@@ -9,18 +9,38 @@ let players = ['<img src= "http://www.altitudementalhealth.com/wp-content/upload
 '<img src="http://pngimg.com/upload/orange_PNG766.png">'];
 let count = 0;
 let gameboard =['', '', '', '', '', '', '', '', ''];
-let playerScore = [0, 0, 0];  //tie, player 1('x'): apple, player 2('o'): orrange
+let scoreBoard = [0, 0, 0];  //tie, player 1('x'): apple, player 2('o'): orrange
 let announcer = ["Oh no! It's a tie!", "Winner is  "]; // will display with an image of the tie staus or winner
 // underneath the statement.
 let game = {
   over: false,
 };
 
+const tie = function(){
+  if(count === 9){
+    winOrTie(announcer, 0, 0);
+    $('#tie').html(scoreBoard[0]);
+  }
+};
+
+let startGame = function(player, letter, image, fruit){
+  $(this).html(players[player]);
+  gameboard[event.target.id] = letter;
+  updateGame(letter, event.target.id);
+  $('#announcement').html('Player ' + player + fruit + ': ' + 'turn!');
+  getWinner(player, letter);
+  count +=1;
+  tie();
+};
+
 let winOrTie = function(announcer, index, player) {
-  $(announcement)
-
-}
-
+  $('#announcement').hide();
+  $('#winner').html(announcer[index] + players[player]).show();
+  getUserGames();
+  game.over =true;
+  count = 0;
+  scoreBoard[player] += 1;
+};
 
 const reset = function(){
   count = 0;
@@ -32,19 +52,8 @@ const reset = function(){
   getUserGames();
 };
 
-const tie = function(){
-  if(count === 9){
-    tieScore += 1;
-    // $('.board').hide();
-    $('#winner').html('Oh No! A Tie!' + players[2]).show();
-    $('#tie').html(tieScore);
-    $('#announcement').hide();
-    getUserGames();
-    game.over =true;
-  }
-};
 
-const getWinner = function(player, value, game){
+const getWinner = function(player, value){
   if(((gameboard[0] === value) && (gameboard[1] === value) &&(gameboard[2] === value)) ||
     ((gameboard[3] === value) && (gameboard[4] === value) &&(gameboard[5] === value)) ||
     ((gameboard[6] === value) && (gameboard[7] === value) && (gameboard[8] === value)) ||
@@ -54,18 +63,13 @@ const getWinner = function(player, value, game){
     ((gameboard[0] === value) && (gameboard[4] === value) &&(gameboard[8] === value)) ||
     ((gameboard[2] === value) && (gameboard[4] === value) &&(gameboard[6] === value)) )
   {
-    $('#announcement').hide();
-    $('#winner').html("winner is " + players[player]).show();
-    game.over = true;
-    count = 0;
-    playerScore[player] += 1;
+    winOrTie(announcer, 1, player)
     if(value ==='x'){
-      $('#x').html(playerScore[player]);
+      $('#x').html(scoreBoard[player]);
     }
     else if(value ==='o'){
-      $('#o').html(playerScore[player]);
+      $('#o').html(scoreBoard[player]);
     }
-    getUserGames();
   }
 };
 
@@ -109,16 +113,16 @@ let createGame = function() {
 };
 
 
-
-let hide = function(){
-  $('.board').hide();
-  $('#reset').hide();
-  $('#announcement').hide();
-  $('table').hide();
-  $('#gameHistory').hide();
+let hideorshow = function(method){
+  $('.board').method;
+  $('#reset').method;
+  $('#announcement').method;
+  $('table').method;
+  $('#gameHistory').method;
 };
+
 $(document).ready(function() {
-  hide();
+  hideorshow(hide());
 
   $('#sign-up').on('submit', function(e) {
     e.preventDefault();
@@ -153,11 +157,7 @@ $(document).ready(function() {
       myApp.user = data.user;
       console.log(data);
       createGame();
-      $('.board').show();
-      $('#reset').show();
-      $('#announcement').show();
-      $('table').show();
-      $('#gameHistory').show();
+      hideorshow(show());
     }).fail(function(jqxhr) {
       console.error(jqxhr);
     });
@@ -262,15 +262,7 @@ let playGame = function(){
     if(game.over === false) {
       if($(this).html() === '') {
         if(count % 2 === 0){
-          $(this).html(players[0]);
-          gameboard[event.target.id] ='x';
-          updateGame('x',event.target.id);
-          // alert(event.target.id);
-          console.log(gameboard);
-          $('#announcement').html("Player 2: Orange turn!");
-          getWinner(0, 'x', game);
-          count +=1;
-          tie();
+          startGame(1, 'x', 1, 'Apple')
         }
         else {
           $(this).html(players[1]);
