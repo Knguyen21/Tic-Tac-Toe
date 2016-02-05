@@ -55,9 +55,27 @@ const getWinner = function(player, value, game){
     else if(value ==='o'){
       $('#o').html(playerScore[player]);
     }
-
   }
 };
+
+let getUserGames = function(){ /// put index and player
+  $.ajax({
+    url: myApp.baseURL + '/games',
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + myApp.user.token,
+    },
+    data: {}
+  })
+  .done(function(data){
+    console.log(data);
+  })
+  .fail(function(jqxhr) {
+    console.error(jqxhr);
+  });
+};
+
+
 let createGame = function() {
   $.ajax({
     url: myApp.baseURL + '/games',
@@ -76,23 +94,6 @@ let createGame = function() {
   });
 };
 
-let getUserGames = function(){ /// put index and player
-  $.ajax({
-    url: myApp.baseURL + '/games',
-    method: 'GET',
-    headers: {
-      Authorization: 'Token token=' + myApp.user.token,
-    },
-    data: {}
-  })
-  .done(function(data){
-    myApp.game = data.game;
-    console.log(data);
-  })
-  .fail(function(jqxhr) {
-    console.error(jqxhr);
-  });
-};
 
 
 let hide = function(){
@@ -137,14 +138,12 @@ $(document).ready(function() {
       myApp.user = data.user;
       console.log(data);
       createGame();
-      getUserGames();
       $('.board').show();
       $('#reset').show();
       $('#announcement').show();
       $('table').show();
     }).fail(function(jqxhr) {
       console.error(jqxhr);
-
     });
   });
 
@@ -214,11 +213,6 @@ $(document).ready(function() {
   };
 
 
-
-
-
-
-
 let updateGame = function(player, index){ /// put index and player
   $.ajax({
     url: myApp.baseURL + '/games/' + myApp.game.id,
@@ -245,8 +239,6 @@ let updateGame = function(player, index){ /// put index and player
     console.error(jqxhr);
   });
 };
-
-
 
   $('#winner').hide();
   $('.board').children().click(function() {
