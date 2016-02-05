@@ -145,7 +145,7 @@ img {
    margin-right:500px;
   text-align: center;
   font-size: 20px;
-  width: 100px;
+
 
 }
 #enterGame{
@@ -157,9 +157,19 @@ img {
     padding: 0px;
 }
 
-// table {
-//   height: 100px;
-//   width: 200px;
-//   font-size: 18px;
-//   display: inline-block;
-// }
+table {
+  height: 100px;
+  width: 200px;
+  font-size: 18px;
+  text-align: center;
+
+}
+
+#gameHistory {
+  float: left;
+  width: 200px;
+  border: 3px solid blue;
+  text-align: center;
+  background-color: red;
+  border-radius: 10%;
+}
