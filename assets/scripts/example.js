@@ -14,8 +14,44 @@ let game = {
   over: false,
 };
 
+let getUserGames = function(){ /// put index and player
+  $.ajax({
+    url: myApp.baseURL + '/games',
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + myApp.user.token,
+    },
+    data: {}
+  })
+  .done(function(data){
+    // myApp.game = data.game;
+    console.log(data.games.length);
+    $('#gameCounter').html(data.games.length);
+  })
+  .fail(function(jqxhr) {
+    console.error(jqxhr);
+  });
+};
 
-const reset = function(){
+let createGame = function() {
+  $.ajax({
+    url: myApp.baseURL + '/games',
+    method: 'POST',
+    headers: {
+      Authorization: 'Token token=' + myApp.user.token,
+    },
+    data: {}
+  })
+  .done(function(data){
+    myApp.game = data.game;
+    console.log(data);
+  })
+  .fail(function(jqxhr) {
+    console.error(jqxhr);
+  });
+};
+
+let reset = function(){
   count = 0;
   gameboard =['', '', '', '', '', '', '', '', ''];
   $('#winner').hide();
@@ -25,7 +61,7 @@ const reset = function(){
   getUserGames();
 };
 
-const tie = function(){
+let tie = function(){
   if(count === 9){
     tieScore += 1;
     // $('.board').hide();
@@ -37,7 +73,7 @@ const tie = function(){
   }
 };
 
-const getWinner = function(player, value, game){
+let getWinner = function(player, value){
   if(((gameboard[0] === value) && (gameboard[1] === value) &&(gameboard[2] === value)) ||
     ((gameboard[3] === value) && (gameboard[4] === value) &&(gameboard[5] === value)) ||
     ((gameboard[6] === value) && (gameboard[7] === value) && (gameboard[8] === value)) ||
@@ -61,46 +97,6 @@ const getWinner = function(player, value, game){
     getUserGames();
   }
 };
-
-let getUserGames = function(){ /// put index and player
-  $.ajax({
-    url: myApp.baseURL + '/games',
-    method: 'GET',
-    headers: {
-      Authorization: 'Token token=' + myApp.user.token,
-    },
-    data: {}
-  })
-  .done(function(data){
-    // myApp.game = data.game;
-    console.log(data.games.length);
-    debugger;
-    $('#gameCounter').html(data.games.length);
-  })
-  .fail(function(jqxhr) {
-    console.error(jqxhr);
-  });
-};
-
-
-let createGame = function() {
-  $.ajax({
-    url: myApp.baseURL + '/games',
-    method: 'POST',
-    headers: {
-      Authorization: 'Token token=' + myApp.user.token,
-    },
-    data: {}
-  })
-  .done(function(data){
-    myApp.game = data.game;
-    console.log(data);
-  })
-  .fail(function(jqxhr) {
-    console.error(jqxhr);
-  });
-};
-
 
 
 let hide = function(){
@@ -261,7 +257,7 @@ let playGame = function(){
           // alert(event.target.id);
           console.log(gameboard);
           $('#announcement').html("Player 2: Orange turn!");
-          getWinner(0, 'x', game);
+          getWinner(0, 'x');
           count +=1;
           tie();
         }
@@ -272,7 +268,7 @@ let playGame = function(){
           // alert(event.target.id);
           console.log(gameboard);
           $('#announcement').html("Player 1: Apple turn!");
-          getWinner(1, 'o', game);
+          getWinner(1, 'o');
           count +=1;
           tie();
         }
