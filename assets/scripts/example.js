@@ -23,15 +23,7 @@ const tie = function(){
   }
 };
 
-let startGame = function(player, letter, image, fruit){
-  $(this).html(players[player]);
-  gameboard[event.target.id] = letter;
-  updateGame(letter, event.target.id);
-  $('#announcement').html('Player ' + player + fruit + ': ' + 'turn!');
-  getWinner(player, letter);
-  count +=1;
-  tie();
-};
+
 
 let winOrTie = function(announcer, index, player) {
   $('#announcement').hide();
@@ -53,6 +45,12 @@ const reset = function(){
 };
 
 
+$('#reset').click(function() {
+ reset();
+   game.over = false;
+ });
+
+
 const getWinner = function(player, value){
   if(((gameboard[0] === value) && (gameboard[1] === value) &&(gameboard[2] === value)) ||
     ((gameboard[3] === value) && (gameboard[4] === value) &&(gameboard[5] === value)) ||
@@ -63,7 +61,7 @@ const getWinner = function(player, value){
     ((gameboard[0] === value) && (gameboard[4] === value) &&(gameboard[8] === value)) ||
     ((gameboard[2] === value) && (gameboard[4] === value) &&(gameboard[6] === value)) )
   {
-    winOrTie(announcer, 1, player)
+    winOrTie(announcer, 1, player);
     if(value ==='x'){
       $('#x').html(scoreBoard[player]);
     }
@@ -85,7 +83,6 @@ let getUserGames = function(){ /// put index and player
   .done(function(data){
     // myApp.game = data.game;
     console.log(data.games.length);
-    debugger;
     $('#gameCounter').html(data.games.length);
   })
   .fail(function(jqxhr) {
@@ -113,16 +110,25 @@ let createGame = function() {
 };
 
 
-let hideorshow = function(method){
-  $('.board').method;
-  $('#reset').method;
-  $('#announcement').method;
-  $('table').method;
-  $('#gameHistory').method;
+let hide = function(){
+  $('.board').hide();
+  $('#reset').hide();
+  $('#announcement').hide();
+  $('table').hide();
+  $('#gameHistory').hide();
+};
+
+let show = function(){
+  $('.board').show();
+  $('#reset').show();
+  $('#announcement').show();
+  $('table').show();
+  $('#gameHistory').show();
 };
 
 $(document).ready(function() {
-  hideorshow(hide());
+  hide();
+
 
   $('#sign-up').on('submit', function(e) {
     e.preventDefault();
@@ -157,7 +163,7 @@ $(document).ready(function() {
       myApp.user = data.user;
       console.log(data);
       createGame();
-      hideorshow(show());
+      show();
     }).fail(function(jqxhr) {
       console.error(jqxhr);
     });
@@ -256,24 +262,28 @@ let updateGame = function(player, index){ /// put index and player
     console.error(jqxhr);
   });
 };
+
+let startGame = function(player, letter, fruit){
+  gameboard[event.target.id] = letter;
+  updateGame(letter, event.target.id);
+  $('#announcement').html('Player ' + player + fruit + ': ' + 'turn!');
+  getWinner(player, letter);
+  count +=1;
+  tie();
+};
+
 let playGame = function(){
   $('#winner').hide();
   $('.board').children().click(function() {
     if(game.over === false) {
       if($(this).html() === '') {
         if(count % 2 === 0){
-          startGame(1, 'x', 1, 'Apple')
+          startGame(1, 'x', 'Apple');
+          $(this).html(players[1]);
         }
         else {
-          $(this).html(players[1]);
-          gameboard[event.target.id] ='o';
-          updateGame('o',event.target.id);
-          // alert(event.target.id);
-          console.log(gameboard);
-          $('#announcement').html("Player 1: Apple turn!");
-          getWinner(1, 'o', game);
-          count +=1;
-          tie();
+          startGame(2, 'o', 'Orange');
+          $(this).html(players[2]);
         }
       }
     }
@@ -281,11 +291,8 @@ let playGame = function(){
 };
 
 
-playGame();
 
-    $('#reset').click(function() {
-      reset();
-      game.over = false;
-    });
+playGame();
 });
+
 module.exports = true;
