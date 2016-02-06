@@ -3,7 +3,6 @@ const myApp = {
   baseURL: 'http://tic-tac-toe.wdibos.com',
 };
 
-
 let players = ['<img src= "http://www.altitudementalhealth.com/wp-content/uploads/2014/01/Apple-and-Orange-tied-together-7509690-300x200.jpg"/>',
 '<img src="http://icons.iconarchive.com/icons/bingxueling/fruit-vegetables/128/apple-red-icon.png"/>',
 '<img src="http://pngimg.com/upload/orange_PNG766.png">'];
@@ -16,14 +15,23 @@ let game = {
   over: false,
 };
 
-const tie = function(){
-  if(count === 9){
-    winOrTie(announcer, 0, 0);
-    $('#tie').html(scoreBoard[0]);
-  }
+let getUserGames = function(){ /// put index and player
+  $.ajax({
+    url: myApp.baseURL + '/games',
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + myApp.user.token,
+    },
+    data: {}
+  })
+  .done(function(data){
+    console.log(data.games.length);
+    $('#gameCounter').html(data.games.length);
+  })
+  .fail(function(jqxhr) {
+    console.error(jqxhr);
+  });
 };
-
-
 
 let winOrTie = function(announcer, index, player) {
   $('#announcement').hide();
@@ -32,6 +40,31 @@ let winOrTie = function(announcer, index, player) {
   game.over =true;
   count = 0;
   scoreBoard[player] += 1;
+};
+
+const tie = function(){
+  if(count === 9){
+    winOrTie(announcer, 0, 0);
+    $('#tie').html(scoreBoard[0]);
+  }
+};
+
+let createGame = function() {
+  $.ajax({
+    url: myApp.baseURL + '/games',
+    method: 'POST',
+    headers: {
+      Authorization: 'Token token=' + myApp.user.token,
+    },
+    data: {}
+  })
+  .done(function(data){
+    myApp.game = data.game;
+    console.log(data);
+  })
+  .fail(function(jqxhr) {
+    console.error(jqxhr);
+  });
 };
 
 const reset = function(){
@@ -44,11 +77,12 @@ const reset = function(){
   getUserGames();
 };
 
-
-$('#reset').click(function() {
- reset();
-   game.over = false;
- });
+let resetGame = function(){
+  $('#reset').click(function() {
+    reset();
+    game.over = false;
+  });
+};
 
 
 const getWinner = function(player, value){
@@ -71,44 +105,6 @@ const getWinner = function(player, value){
   }
 };
 
-let getUserGames = function(){ /// put index and player
-  $.ajax({
-    url: myApp.baseURL + '/games',
-    method: 'GET',
-    headers: {
-      Authorization: 'Token token=' + myApp.user.token,
-    },
-    data: {}
-  })
-  .done(function(data){
-    // myApp.game = data.game;
-    console.log(data.games.length);
-    $('#gameCounter').html(data.games.length);
-  })
-  .fail(function(jqxhr) {
-    console.error(jqxhr);
-  });
-};
-
-
-let createGame = function() {
-  $.ajax({
-    url: myApp.baseURL + '/games',
-    method: 'POST',
-    headers: {
-      Authorization: 'Token token=' + myApp.user.token,
-    },
-    data: {}
-  })
-  .done(function(data){
-    myApp.game = data.game;
-    console.log(data);
-  })
-  .fail(function(jqxhr) {
-    console.error(jqxhr);
-  });
-};
-
 
 let hide = function(){
   $('.board').hide();
@@ -126,16 +122,12 @@ let show = function(){
   $('#gameHistory').show();
 };
 
-$(document).ready(function() {
-  hide();
 
-
-  $('#sign-up').on('submit', function(e) {
+let signUp = function(e) {
     e.preventDefault();
     var formData = new FormData(e.target);
     $.ajax({
-      url: myApp.baseURL + '/sign-up',
-      // url: 'http://httpbin.org/post',
+      url: myApp.baseURL + '/sign-up', 
       method: 'POST',
       contentType: false,
       processData: false,
@@ -144,95 +136,96 @@ $(document).ready(function() {
       myApp.user = data.user;
       console.log(data);
     }).fail(function(jqxhr) {
-      console.error(jqxhr);
-    });
-  });
-
-
-  $('#sign-in').on('submit', function signin(e) {
-    e.preventDefault();
-    var formData = new FormData(e.target);
-    $.ajax({
-      url: myApp.baseURL + '/sign-in',
-      // url: 'http://httpbin.org/post',
-      method: 'POST',
-      contentType: false,
-      processData: false,
-      data: formData,
-    }).done(function(data) {
-      myApp.user = data.user;
-      console.log(data);
-      createGame();
-      show();
-    }).fail(function(jqxhr) {
-      console.error(jqxhr);
-    });
-  });
-
-  $('#sign-out').on('submit', function(e) {
-    e.preventDefault();
-    var formData = new FormData(e.target);
-    $.ajax({
-      url: myApp.baseURL + '/sign-out/' + myApp.user.id,
-      // url: 'http://httpbin.org/post',
-      method: 'DELETE',
-      headers: {
-      Authorization: 'Token token=' + myApp.user.token,
-      },
-      contentType: false,
-      processData: false,
-      data: formData,
-    }).done(function(data) {
-      console.log(data);
-      hide();
-    }).fail(function(jqxhr) {
-      console.error(jqxhr);
-    });
-  });
-
-  $('#change-password').on('submit', function(e) {
-    e.preventDefault();
-    if (!myApp.user) {
-      console.error('Wrong!');
-      return;
-    }
-    var formData = new FormData(e.target);
-    $.ajax({
-      url: myApp.baseURL + '/change-password/' + myApp.user.id,
-      // url: 'http://httpbin.org/post',
-      method: 'PATCH',
-      headers: {
-        Authorization: 'Token token=' + myApp.user.token,
-      },
-      contentType: false,
-      processData: false,
-      data: formData,
-    }).done(function(data) {
-      console.log('successful data');
-      console.log(data);
-    }).fail(function(jqxhr) {
-      console.error(jqxhr);
-    });
-  });
-  let showGame = function(){ /// put index and player
-    $.ajax({
-      url: myApp.baseURL + '/games/' + myApp.game.id,
-      method: 'GET',
-      headers: {
-        Authorization: 'Token token=' + myApp.user.token,
-      },
-      data: {}
-    })
-    .done(function(data){
-      myApp.game = data.game;
-      console.log(data);
-      console.log("showgame");
-      console.log(myApp.game);
-    })
-    .fail(function(jqxhr) {
       console.error(jqxhr);
     });
   };
+
+
+let signIn = function(e){
+  e.preventDefault();
+  var formData = new FormData(e.target);
+  $.ajax({
+    url: myApp.baseURL + '/sign-in',
+    method: 'POST',
+    contentType: false,
+    processData: false,
+    data: formData,
+  })
+  .done(function(data) {
+    myApp.user = data.user;
+    console.log(data);
+    createGame();
+    show();
+  })
+  .fail(function(jqxhr) {
+    console.error(jqxhr);
+  });
+};
+
+let signOut = function(e) {
+  e.preventDefault();
+  var formData = new FormData(e.target);
+  $.ajax({
+    url: myApp.baseURL + '/sign-out/' + myApp.user.id,
+    method: 'DELETE',
+    headers: {
+    Authorization: 'Token token=' + myApp.user.token,
+    },
+    contentType: false,
+    processData: false,
+    data: formData,
+  })
+  .done(function(data) {
+    console.log(data);
+    hide();
+  })
+  .fail(function(jqxhr) {
+    console.error(jqxhr);
+  });
+};
+
+let changePassword = function(e) {
+  e.preventDefault();
+  if (!myApp.user) {
+    alert('Wrong password!');
+    return;
+  }
+  var formData = new FormData(e.target);
+  $.ajax({
+    url: myApp.baseURL + '/change-password/' + myApp.user.id,
+    // url: 'http://httpbin.org/post',
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Token token=' + myApp.user.token,
+    },
+    contentType: false,
+    processData: false,
+    data: formData,
+  }).done(function(data) {
+    console.log(data);
+  }).fail(function(jqxhr) {
+    console.error(jqxhr);
+  });
+};
+
+let showGame = function(){ /// put index and player
+  $.ajax({
+    url: myApp.baseURL + '/games/' + myApp.game.id,
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + myApp.user.token,
+    },
+    data: {}
+  })
+  .done(function(data){
+    myApp.game = data.game;
+    console.log(data);
+    getUserGames();
+  })
+  .fail(function(jqxhr) {
+    console.error(jqxhr);
+  });
+};
 
 
 let updateGame = function(player, index){ /// put index and player
@@ -263,10 +256,10 @@ let updateGame = function(player, index){ /// put index and player
   });
 };
 
-let startGame = function(player, letter, fruit){
+let startGame = function(player, letter, announcePlayer, fruit){
   gameboard[event.target.id] = letter;
   updateGame(letter, event.target.id);
-  $('#announcement').html('Player ' + player + fruit + ': ' + 'turn!');
+  $('#announcement').html('Player ' + announcePlayer + ' : ' + fruit +  ' turn!');
   getWinner(player, letter);
   count +=1;
   tie();
@@ -278,11 +271,11 @@ let playGame = function(){
     if(game.over === false) {
       if($(this).html() === '') {
         if(count % 2 === 0){
-          startGame(1, 'x', 'Apple');
+          startGame(1, 'x', 2, 'Orange');
           $(this).html(players[1]);
         }
         else {
-          startGame(2, 'o', 'Orange');
+          startGame(2, 'o', 1, 'Apple');
           $(this).html(players[2]);
         }
       }
@@ -290,9 +283,18 @@ let playGame = function(){
   });
 };
 
+let init = function() {
+  $('#sign-up').on('submit', signUp);
+  $('#sign-in').on('submit', signIn);
+  $('#sign-out').on('submit', signOut);
+  $('#change-password').on('submit', changePassword);
+};
 
-
-playGame();
+$(document).ready(function() {
+  hide();
+  playGame();
+  init();
+  resetGame();
 });
 
 module.exports = true;
