@@ -105,6 +105,13 @@ const getWinner = function(player, value){
   }
 };
 
+let resetScoreBoard = function(){
+  $('#x').html("0");
+  $('#o').html("0");
+  $('#tie').html("0");
+  scoreBoard = [0, 0, 0];
+};
+
 
 let hide = function(){
   $('.board').hide();
@@ -112,6 +119,7 @@ let hide = function(){
   $('#announcement').hide();
   $('table').hide();
   $('#gameHistory').hide();
+  $('#winner').hide();
 };
 
 let show = function(){
@@ -120,6 +128,7 @@ let show = function(){
   $('#announcement').show();
   $('table').show();
   $('#gameHistory').show();
+  $('#winner').hide();
 };
 
 
@@ -127,7 +136,7 @@ let signUp = function(e) {
     e.preventDefault();
     var formData = new FormData(e.target);
     $.ajax({
-      url: myApp.baseURL + '/sign-up', 
+      url: myApp.baseURL + '/sign-up',
       method: 'POST',
       contentType: false,
       processData: false,
@@ -154,8 +163,11 @@ let signIn = function(e){
   .done(function(data) {
     myApp.user = data.user;
     console.log(data);
-    createGame();
+    reset();
+    resetScoreBoard();
+    game.over = false;
     show();
+
   })
   .fail(function(jqxhr) {
     console.error(jqxhr);
