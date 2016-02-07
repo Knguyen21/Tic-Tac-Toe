@@ -25,10 +25,6 @@ let getUserGames = function(){ /// put index and player
     data: {}
   })
   .done(function(data){
-<<<<<<< HEAD
-    // myApp.game = data.game;
-=======
->>>>>>> master
     console.log(data.games.length);
     $('#gameCounter').html(data.games.length);
   })
@@ -37,8 +33,6 @@ let getUserGames = function(){ /// put index and player
   });
 };
 
-<<<<<<< HEAD
-=======
 let winOrTie = function(announcer, index, player) {
   $('#announcement').hide();
   $('#winner').html(announcer[index] + players[player]).show();
@@ -55,7 +49,6 @@ const tie = function(){
   }
 };
 
->>>>>>> master
 let createGame = function() {
   $.ajax({
     url: myApp.baseURL + '/games',
@@ -74,11 +67,7 @@ let createGame = function() {
   });
 };
 
-<<<<<<< HEAD
-let reset = function(){
-=======
 const reset = function(){
->>>>>>> master
   count = 0;
   gameboard =['', '', '', '', '', '', '', '', ''];
   $('#winner').hide();
@@ -88,21 +77,6 @@ const reset = function(){
   getUserGames();
 };
 
-<<<<<<< HEAD
-let tie = function(){
-  if(count === 9){
-    tieScore += 1;
-    // $('.board').hide();
-    $('#winner').html('Oh No! A Tie!' + players[2]).show();
-    $('#tie').html(tieScore);
-    $('#announcement').hide();
-    getUserGames();
-    game.over =true;
-  }
-};
-
-let getWinner = function(player, value){
-=======
 let resetGame = function(){
   $('#reset').click(function() {
     reset();
@@ -112,7 +86,6 @@ let resetGame = function(){
 
 
 const getWinner = function(player, value){
->>>>>>> master
   if(((gameboard[0] === value) && (gameboard[1] === value) &&(gameboard[2] === value)) ||
     ((gameboard[3] === value) && (gameboard[4] === value) &&(gameboard[5] === value)) ||
     ((gameboard[6] === value) && (gameboard[7] === value) && (gameboard[8] === value)) ||
@@ -122,20 +95,6 @@ const getWinner = function(player, value){
     ((gameboard[0] === value) && (gameboard[4] === value) &&(gameboard[8] === value)) ||
     ((gameboard[2] === value) && (gameboard[4] === value) &&(gameboard[6] === value)) )
   {
-<<<<<<< HEAD
-    $('#announcement').hide();
-    $('#winner').html("winner is " + players[player]).show();
-    game.over = true;
-    count = 0;
-    playerScore[player] += 1;
-    if(value ==='x'){
-      $('#x').html(playerScore[player]);
-    }
-    else if(value ==='o'){
-      $('#o').html(playerScore[player]);
-    }
-    getUserGames();
-=======
     winOrTie(announcer, 1, player);
     if(value ==='x'){
       $('#x').html(scoreBoard[player]);
@@ -143,7 +102,6 @@ const getWinner = function(player, value){
     else if(value ==='o'){
       $('#o').html(scoreBoard[player]);
     }
->>>>>>> master
   }
 };
 
@@ -169,7 +127,7 @@ let signUp = function(e) {
     e.preventDefault();
     var formData = new FormData(e.target);
     $.ajax({
-      url: myApp.baseURL + '/sign-up', 
+      url: myApp.baseURL + '/sign-up',
       method: 'POST',
       contentType: false,
       processData: false,
@@ -313,35 +271,12 @@ let playGame = function(){
     if(game.over === false) {
       if($(this).html() === '') {
         if(count % 2 === 0){
-<<<<<<< HEAD
-          $(this).html(players[0]);
-          gameboard[event.target.id] ='x';
-          updateGame('x',event.target.id);
-          // alert(event.target.id);
-          console.log(gameboard);
-          $('#announcement').html("Player 2: Orange turn!");
-          getWinner(0, 'x');
-          count +=1;
-          tie();
-        }
-        else {
-          $(this).html(players[1]);
-          gameboard[event.target.id] ='o';
-          updateGame('o',event.target.id);
-          // alert(event.target.id);
-          console.log(gameboard);
-          $('#announcement').html("Player 1: Apple turn!");
-          getWinner(1, 'o');
-          count +=1;
-          tie();
-=======
           startGame(1, 'x', 2, 'Orange');
           $(this).html(players[1]);
         }
         else {
           startGame(2, 'o', 1, 'Apple');
           $(this).html(players[2]);
->>>>>>> master
         }
       }
     }
