@@ -10036,12 +10036,20 @@
 	  }
 	};
 
+	var resetScoreBoard = function resetScoreBoard() {
+	  $('#x').html("0");
+	  $('#o').html("0");
+	  $('#tie').html("0");
+	  scoreBoard = [0, 0, 0];
+	};
+
 	var hide = function hide() {
 	  $('.board').hide();
 	  $('#reset').hide();
 	  $('#announcement').hide();
 	  $('table').hide();
 	  $('#gameHistory').hide();
+	  $('#winner').hide();
 	};
 
 	var show = function show() {
@@ -10050,6 +10058,7 @@
 	  $('#announcement').show();
 	  $('table').show();
 	  $('#gameHistory').show();
+	  $('#winner').hide();
 	};
 
 	var signUp = function signUp(e) {
@@ -10081,7 +10090,9 @@
 	  }).done(function (data) {
 	    myApp.user = data.user;
 	    console.log(data);
-	    createGame();
+	    reset();
+	    resetScoreBoard();
+	    game.over = false;
 	    show();
 	  }).fail(function (jqxhr) {
 	    console.error(jqxhr);
