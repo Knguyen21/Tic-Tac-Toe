@@ -13,8 +13,8 @@ h1 {
   border: 3px solid white;
   border-radius: 20%;
   height: 30px;
-  margin-left: 400px;
-  margin-right: 400px;
+  margin: auto;
+  width: 230px;
   text-align: center;
   background-color: green;
   font-size: 20px;
@@ -32,12 +32,12 @@ div div:hover {
 }
 
 #reset {
-  margin-left: 500px;
-  margin-right: 500px;
+  margin:auto;
   border: 3px solid blue;
   text-align: center;
   background-color: red;
   border-radius: 30%;
+  width: 100px;
 }
 
 .r1c1 {
@@ -141,16 +141,15 @@ img {
 #winner {
    width: 150px;
    height: 150px;
-   margin-left: 500px;
-   margin-right:500px;
+   margin: auto;
   text-align: center;
   font-size: 20px;
 
 
 }
 #enterGame{
-    margin-left: 200px;
-    margin-right: 200px;
+    margin: auto;
+    width: 560px;
     border: 3px solid blue;
     background-color: green;
     text-align: center;
