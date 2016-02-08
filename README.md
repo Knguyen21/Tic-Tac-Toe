@@ -22,4 +22,4 @@ I used javascript, jquery, html, css, ajax, and json to create this game.
 
 ## Wireframe:
 
-![alt tag](https://goo.gl/photos/oAyt5pc29aY3Hi6G9)
+![alt tag](https://goo.gl/photos/oAyt5pc29aY3Hi6G9/to/img.png)
