@@ -19,3 +19,7 @@ When User resets the game, a new empty gameboard will appear.
 
 ##How I created my game:
 I used javascript, jquery, html, css, ajax, and json to create this game.
+
+## Wireframe:
+
+![alt tag](https://goo.gl/photos/oAyt5pc29aY3Hi6G9)
